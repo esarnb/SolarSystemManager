@@ -9,7 +9,12 @@ $(function() {
       confirmBtn = $("#confirmManage"),
       confirmBtn = $("#confirmCancel"),
       planetNameField = $("#nameField"),
-      planetColorField = $("#colorField");
+      planetColorField = $("#colorField"),
+      numPlanetsCount = $("#NoOfCircles"),
+      decrementBtn = $("#decrement"),
+      incrementBtn = $("#increment");
+    
+    var planetCount = 0;
 
   /*   Update Planet's properties   */
 
@@ -38,6 +43,10 @@ $(function() {
     //Update planet if confirm btn is clicked
     confirmBtn.on("click", function() { editPlanet() })
   })
+
+  //TEMPORARY: Increment or decrement the text-value of the amount of planets.
+  incrementBtn.on("click", function() { numPlanetsCount.text(parseInt(numPlanetsCount.text())++) })
+  decrementBtn.on("click", function() { numPlanetsCount.text(parseInt(numPlanetsCount.text())--) })
 
   /**
    * Function deletes the specific planet that is
@@ -72,6 +81,10 @@ $(function() {
   }
 
 })
+
+
+
+
 
 /**
  * Function returns a random hex color.
