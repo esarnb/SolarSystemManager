@@ -7,15 +7,16 @@ $(function() {
       updatePlanetBtn =  $("#updatePlanet"),
       confirmPrompt = $("#confirmPrompt"),
       confirmBtn = $("#confirmManage"),
-      confirmBtn = $("#confirmCancel"),
+      cancelBtn = $("#confirmCancel"),
       planetNameField = $("#nameField"),
       planetColorField = $("#colorField"),
       numPlanetsCount = $("#NoOfCircles"),
       decrementBtn = $("#decrement"),
       incrementBtn = $("#increment");
     
-    var planetCount = 0;
-
+    var noOfCircles = 3;
+    numPlanetsCount.val(noOfCircles);
+    numPlanetsCount.text(noOfCircles);
   /*   Update Planet's properties   */
 
   //On the click of a planet's class, open the planet's edit menu
@@ -45,8 +46,18 @@ $(function() {
   })
 
   //TEMPORARY: Increment or decrement the text-value of the amount of planets.
-  incrementBtn.on("click", function() { numPlanetsCount.text(parseInt(numPlanetsCount.text())++) })
-  decrementBtn.on("click", function() { numPlanetsCount.text(parseInt(numPlanetsCount.text())--) })
+  noOfCircles = parseInt(numPlanetsCount.text());
+  $(document).on("click", "#increment", function() {
+    noOfCircles++;
+    numPlanetsCount.val(noOfCircles);
+    numPlanetsCount.text(`${noOfCircles}`) 
+  })
+
+  $(document).on("click", "#decrement", function() {
+    noOfCircles--;
+    numPlanetsCount.val(noOfCircles);
+    numPlanetsCount.text(`${noOfCircles}`) 
+  })
 
   /**
    * Function deletes the specific planet that is
@@ -104,26 +115,34 @@ function getRandomColor() { return `#${Math.floor(Math.random()*16777215).toStri
 
 $(function () {
   /* add onchange listener */
-  $("#NoOfCircles").change(function () {
-      /* get the value in the textbox */
-      var noOfCircles = $("#NoOfCircles").val();
+  $(document).on('change', "#NoOfCircles", function() {
+        console.log("Change 1");
+        /* get the value in the textbox */
+      var noOfCircles = parseInt($("#NoOfCircles").val());
       /* equally divide 360 by the no of circles to be drawn */
       var degreeAngle = 360 / noOfCircles;
       /* get handle on the wrapper canvas */
-      var wrapper = $(".circle-container");
+      var wrapper = $("#circle-container");
       /* clear it first */
-      wrapper.html("");
+      wrapper.empty();
       /* initialize angle incrementer variable */
-      var currAngle = 0;
+        console.log("Change 2");
+        var currAngle = 0;
       /* draw each circle at the specified angle */
       for (var i = 0; i < noOfCircles; i++) {
+        console.log("Change I=" + i);
+        
           /* add to the wrapper */
           wrapper.append(getDiv(currAngle));
           /* increment the angle incrementer */
           currAngle = currAngle + degreeAngle;
       }
+      console.log("Change end");
+
   });
   function getDiv(currAngle) {
+    console.log(currAngle);
+    
     return `<div class='circle' style='transform: rotate(${currAngle}) translate(12em) rotate(-${currAngle}deg);background-color:getRandomColor()'></div>`
   }
 });
