@@ -4,19 +4,19 @@
   height:2em;
   border-radius:50%;
   background-color:orange;
+  z-index: -5;
 }
-
 .circle-container {
   position: relative;
-  width: 18.5em;
-  height: 18.5em;
+  width: 24em;
+  height: 24em;
   padding: 2.8em;
   /*= 2em * 1.4 (2em = half the width of an img, 1.4 = sqrt(2))*/
   border: dashed 1px;
   border-radius: 50%;
   margin: 1.75em auto 0;
+  z-index: -4;
 }
-
 .circle-container div {
   display: block;
   overflow: hidden;
@@ -28,4 +28,5 @@
   margin: -2em;
   /* 2em = 4em/2 */
   /* half the width */
+  z-index: -3;
 }

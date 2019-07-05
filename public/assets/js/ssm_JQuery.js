@@ -113,36 +113,78 @@ function getRandomColor() { return `#${Math.floor(Math.random()*16777215).toStri
  * http://jsfiddle.net/sajjansarkar/zgcgq8cg/
  */
 
+// $(function () {
+//   /* add onchange listener */
+//   $(document).on('change', "#NoOfCircles", function() {
+//         console.log("Change 1");
+//         /* get the value in the textbox */
+//       var noOfCircles = parseInt($("#NoOfCircles").val());
+//       /* equally divide 360 by the no of circles to be drawn */
+//       var degreeAngle = 360 / noOfCircles;
+//       /* get handle on the wrapper canvas */
+//       var wrapper = $("#circle-container");
+//       /* clear it first */
+//       wrapper.empty();
+//       /* initialize angle incrementer variable */
+//         console.log("Change 2");
+//         var currAngle = 0;
+//       /* draw each circle at the specified angle */
+//       for (var i = 0; i < noOfCircles; i++) {
+//         console.log("Change I=" + i);
+        
+//           /* add to the wrapper */
+//           wrapper.append(getDiv(currAngle));
+//           /* increment the angle incrementer */
+//           currAngle = currAngle + degreeAngle;
+//       }
+//       console.log("Change end");
+
+//   });
+//   function getDiv(currAngle) {
+//     console.log(currAngle);
+    
+//     return `<div class='circle' style='transform: rotate(${currAngle}) translate(12em) rotate(-${currAngle}deg);background-color:getRandomColor()'></div>`
+//   }
+// });
 $(function () {
   /* add onchange listener */
-  $(document).on('change', "#NoOfCircles", function() {
-        console.log("Change 1");
-        /* get the value in the textbox */
-      var noOfCircles = parseInt($("#NoOfCircles").val());
+  $("#NoOfCircles").change(function () {
+      /* get the value in the textbox */
+      var noOfCircles = $("#NoOfCircles").val();
       /* equally divide 360 by the no of circles to be drawn */
       var degreeAngle = 360 / noOfCircles;
       /* get handle on the wrapper canvas */
-      var wrapper = $("#circle-container");
+      var wrapper = $(".circle-container");
       /* clear it first */
-      wrapper.empty();
+      wrapper.html("");
       /* initialize angle incrementer variable */
-        console.log("Change 2");
-        var currAngle = 0;
+      var currAngle = 0;
       /* draw each circle at the specified angle */
       for (var i = 0; i < noOfCircles; i++) {
-        console.log("Change I=" + i);
-        
           /* add to the wrapper */
           wrapper.append(getDiv(currAngle));
           /* increment the angle incrementer */
           currAngle = currAngle + degreeAngle;
       }
-      console.log("Change end");
 
   });
+  /*
+      Function returns a new DIV with the angles translation using CSS.
+      It also applies a random color for fun.
+      stole the CSS from :http://stackoverflow.com/questions/12813573/position-icons-into-circle
+  */
   function getDiv(currAngle) {
-    console.log(currAngle);
-    
-    return `<div class='circle' style='transform: rotate(${currAngle}) translate(12em) rotate(-${currAngle}deg);background-color:getRandomColor()'></div>`
+      return "<div class='circle' style='transform: rotate(" + currAngle + "deg) translate(12em) rotate(-" + currAngle + "deg);background-color:" + getRandomColor() + "'></div>"
+
   }
+
+  function getRandomColor() {
+      var letters = '0123456789ABCDEF'.split('');
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
+
 });

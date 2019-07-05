@@ -1,14 +1,15 @@
 <div id='circle-container'></div>
 
 <span>
-  <button type="button" id="decrement">-</button>
+  {{!-- <button type="button" id="decrement">-</button>
     <input id="NoOfCircles" value="3"></h5>
-  <button type="button" id="increment">+</button>
+  <button type="button" id="increment">+</button> --}}
+ 
 </span>
 
 
 <ul>
-  {{#each planets}}
-    {{this.name}}
+  {{#each solars}}
+    <li>{{this.name}}</li>
   {{/each}}
 </ul>

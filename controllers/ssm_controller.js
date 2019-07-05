@@ -4,6 +4,8 @@ var solar = require("../models/ssm_model");
 //Main page
 router.get("/", function(req, res) {
   solar.all(function(data) {
+    console.log(data);
+    
     res.render("index", { solars: data });
   });
 });
