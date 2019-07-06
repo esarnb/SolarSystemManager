@@ -4,14 +4,19 @@ var solar = require("../models/ssm_model");
 //Main page
 router.get("/", function(req, res) {
   solar.all(function(data) {
-    console.log(data);
-    
     res.render("index", { solars: data });
   });
 });
 
+//All Planets
+router.get("/api/solar", function(req, res) {
+  solar.all(function(data) {
+    res.json(data)
+  });
+});
+
 //New planet
-router.post("/api/solar", function(req, res) {
+router.post("/api/solar/new", function(req, res) {
   solar.create(["name", "ate"], [req.body.name, req.body.ate], function(result) {
     res.json({ id: result.insertId });
   });

@@ -1,15 +1,25 @@
-<div id='circle-container'></div>
-
-<span>
-  {{!-- <button type="button" id="decrement">-</button>
-    <input id="NoOfCircles" value="3"></h5>
-  <button type="button" id="increment">+</button> --}}
- 
-</span>
-
-
+<br><br> 
 <ul>
   {{#each solars}}
-    <li>{{this.name}}</li>
+    <li>Planet #{{this.id}}: {{this.name}}</li>
+    Created on {{this.created}}
+    <br><br> 
+      
+    <button class="planetBtns" value={{this.id}}>Open Modal</button>
+
+    <div id="Planet_{{this.id}}_Modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <span class="floatLeft"><div id="confirmPrompt{{this.id}}">Would you like to edit or delete planet {{this.name}}? </div><button id="deletePlanet" value="{{this.id}}">Delete</button></span>
+
+          <div>
+            <br>
+            <input type="text" id="planetNameField{{this.id}}" placeholder="New Name">
+            <input type="text" id="planetColorField{{this.id}}" placeholder="New Hex Color">
+            <button id="updatePlanet" value="{{this.id}}">Edit</button>
+          </div>
+
+      </div>
+    </div>
   {{/each}}
 </ul>
