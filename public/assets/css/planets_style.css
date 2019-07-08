@@ -11,7 +11,7 @@
   position: relative;
   border-style: dotted;
   margin: 1.75em auto 0;
-  z-index: -4;
+  z-index: 1;
   width: 18.5em;
   height: 18.5em;
   padding: 2.8em;
@@ -21,7 +21,7 @@
 /* Positioning of the circles */
 #circle-container div {
   display: block;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -90,7 +90,7 @@
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: 120px !important;
   background-color: black;
   color: #fff;
   text-align: center;
@@ -98,9 +98,16 @@
   border-radius: 6px;
  
   /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
+  position: absolute !important;
+
+  z-index: 10;
+  top: -50% !important;
+  left: 50% !important;
+  margin-left: -60px !important; /* Use half of the width (120/2 = 60), to center the tooltip */
+
 }
+
+
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {

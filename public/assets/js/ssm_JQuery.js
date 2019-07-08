@@ -142,7 +142,7 @@ $(function() {
 
   $(document).on("click", "#insertPlanet", function() {
     console.log("id insertPlanet clicked");
-    $("insertPlanetModal").show("slow");
+    $("#insertPlanetModal").show("slow");
   })
 
   $(document).on("click", "#submitNewPlanet", function() {
