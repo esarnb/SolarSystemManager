@@ -33,21 +33,21 @@ function objToSql(ob) {
 
 var orm = {
   //Display all planets to the user.
-  all: function(tableInput, cb) {
+  selectAll: function(tableInput, cb) {
     connection.query(`SELECT * FROM ${tableInput}`, function(err, result) {
       if (err) throw err; cb(result);
     });
   },
 
   //Create a new planet and add it to the system.
-  create: function(table, cols, vals, cb) {
+  insertOne: function(table, cols, vals, cb) {
     connection.query(`INSERT INTO ${table} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)})`, vals, function(err, result) {
       if (err) throw err; cb(result);
     });
   },
 
   //Update a specific item's property.
-  update: function(table, objColVals, condition, cb) {
+  updateOne: function(table, objColVals, condition, cb) {
     connection.query(`UPDATE ${table} SET ${objToSql(objColVals)} WHERE ${condition}`, function(err, result) {
       if (err) throw err; cb(result);
     });

@@ -1,4 +1,22 @@
 <br><br> 
+<button id="insertPlanet">Insert New Planet</button>
+
+
+<div id="insertPlanetModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <span class="floatLeft"><div id="insertPlanetPrompt"> Please fill in the planet's details. </div></span>
+
+      <div>
+        <br>
+        <input type="text" id="planetNameFieldNew" placeholder="New Name">
+        <input type="text" id="planetColorFieldNew" placeholder="New Hex Color">
+        <button id="submitNewPlanet">Submit</button>
+      </div>
+
+  </div>
+</div>
+
 <ul>
   {{#each solars}}
     <li>Planet #{{this.id}}: {{this.name}}</li>

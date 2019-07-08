@@ -5,59 +5,12 @@ $(function() {
 
   planetModal = $("#PlanetMenu")
   deletePlanetBtn = $("#deletePlanet"),
+  insertPlanetBtn = $("#insertPlanet"),
   updatePlanetBtn =  $("#updatePlanet"),
-  confirmPrompt = $("#confirmPrompt"),
-  
-  confirmDenyModal = $("#confirmDenyModal"),
-  confirmBtn = $("#confirmManage"),
-  cancelBtn = $("#confirmCancel"),
+  confirmPrompt = $("#confirmPrompt");
 
-  planetCreatedAtField = $("#colorField"),
-
-  numPlanetsCount = $("#NoOfCircles");
-    
-    var noOfCircles = 3;
-  /*   Update Planet's properties   */
-
-  //On the click of a planet's class, open the planet's edit menu
-  planets.on("click", function() { planetModal.show() });
-
-  // //When delete btn is clicked, confirm with user first.
-  // deletePlanetBtn.on("click", function() {
-  //   planetModal.hide("hide"); //Hide edit menu
-  //   confirmDenyModal.modal("toggle");//Show confirm modal
-  //   confirmPrompt.val("Are you sure you want to delete this planet?");
-    
-  //   //Delete the planet if confirm btn is clicked
-  //   confirmBtn.on("click", function() { deletePlanet() })
-  // })
-    
-  // //Hide confirm modal if cancel btn is clicked
-  // cancelBtn.on("click", function() { confirmDenyModal.toggle("toggle") })
-
-  // //When update btn is clicked, confirm if user first.
-  // updatePlanetBtn.on("click", function() {
-  //   planetModal.modal("toggle"); //Hide edit menu
-  //   confirmDenyModal.modal("toggle");//Show confirm modal
-  //   confirmPrompt.val("Are you sure you want to update this planet?");
-    
-  //   //Update planet if confirm btn is clicked
-  //   confirmBtn.on("click", function() { editPlanet() })
-  // })
-
-  //TEMPORARY: Increment or decrement the text-value of the amount of planets.
-  noOfCircles = parseInt(numPlanetsCount.text());
-  $(document).on("click", "#increment", function() {
-    noOfCircles++;
-    numPlanetsCount.val(noOfCircles);
-    numPlanetsCount.text(`${noOfCircles}`) 
-  })
-
-  $(document).on("click", "#decrement", function() {
-    noOfCircles--;
-    numPlanetsCount.val(noOfCircles);
-    numPlanetsCount.text(`${noOfCircles}`) 
-  })
+    /*On the click of a planet's class, open the planet's edit menu */
+  // planets.on("click", function() { planetModal.show() });
 
   /**
    * Function deletes the specific planet that is
@@ -83,8 +36,9 @@ $(function() {
     var colorText =  $("#planetColorField"+rowid).val().trim();
     var changeText =  $(`#confirmPrompt${rowid}`)
     var currentPrompt = changeText.text()
+
     if (!colorText.startsWith("#") || (colorText.length !== 0 && colorText.length !== 7)) {
-      changeText.text("Color should start with '#' and have 6 alphanumeric letters!");
+      changeText.text("Color should start with '#' and have 6 alphanumeric letters! ('#random' for random color)");
       setTimeout(function(){
         changeText.text(currentPrompt)
       },3000)
@@ -98,12 +52,45 @@ $(function() {
       return;
     }
     var planetProperties = {
-      name: nameText,
-      color: colorText
+      name: `'${nameText}'`,
+      color: `'${colorText}'`
     }
 
     $.ajax(`/api/solar/${rowid}`, {
       type: "PUT",
+      data: planetProperties
+    }).then(() => { location.reload() })
+  }
+
+  
+  function insertPlanet() {
+
+    var nameText = $("#planetNameFieldNew").val().trim();
+    var colorText =  $("#planetColorFieldNew").val().trim();
+    var changeText =  $(`#insertPlanetPrompt`)
+    var currentPrompt = changeText.text()
+
+    if (!colorText.startsWith("#") || (colorText.length !== 0 && colorText.length !== 7)) {
+      changeText.text("Color should start with '#' and have 6 alphanumeric letters! ('#random' for random color)");
+      setTimeout(function(){
+        changeText.text(currentPrompt)
+      },3000)
+      return;
+    }
+    else if (!nameText) {
+      changeText.text("There should be a name before you update it's name!");
+      setTimeout(function(){
+        changeText.text(currentPrompt)
+      },3000)
+      return;
+    }
+    var planetProperties = {
+      name: `'${nameText}'`,
+      color: `'${colorText}'`
+    }
+
+    $.ajax(`/api/solar/${rowid}`, {
+      type: "POST",
       data: planetProperties
     }).then(() => { location.reload() })
   }
@@ -124,15 +111,6 @@ $(function() {
     return color;
 }
 
-
-  /**
-   * Function runs the math for the planets,
-   * altered to run with current planets in db.
-   * 
-   * Inspired by Sajjan Sarkar. His CodePen: 
-   * http://jsfiddle.net/sajjansarkar/zgcgq8cg/
-   */
-
   /**
    * AJAX GET call to get all the planets currently in the solars db,
    * creates all current planets onto page.
@@ -145,26 +123,44 @@ $(function() {
     var currAngle = 0;
 
     for (var i = 0; i < data.length; i++) {
-      wrapper.append("<div class='circle' style='transform: rotate(" + currAngle + "deg) translate(12em) rotate(-" + currAngle + "deg);background-color:" + getRandomColor() + "'></div>");
+      wrapper.append(`<div class='circle tooltip' style='transform: rotate(${currAngle}deg) translate(12em) rotate(-${currAngle}deg);background-color:${(data[i].color == "#random" ? getRandomColor() : data[i].color)}'><div class='tooltiptext'>Planet ${data[i].id}</div></div>`);
       currAngle = currAngle + degreeAngle;
     }
   })
 
-  //Show modal when a planet is clicked.
-  // $("#circle-container").mouseover(function () {
-  //   console.log("mouseover");
-  // })
-  $(document).on("click", ".planetBtns", function() {
-    $(`#Planet_${$(this).val()}_Modal`).show();
+
+  $(document).on("click", ".circle", function(event) {
+    console.log(event);
+    console.log("Clicked");
   })
+
+  $(document).on("click", ".planetBtns", function() {
+    console.log("class planetBtns clicked");
+    
+    $(`#Planet_${$(this).val()}_Modal`).show("slow");
+  })
+
+  $(document).on("click", "#insertPlanet", function() {
+    console.log("id insertPlanet clicked");
+    $("insertPlanetModal").show("slow");
+  })
+
+  $(document).on("click", "#submitNewPlanet", function() {
+    insertPlanet();
+    console.log("id submitNewPlanet clicked");
+  })
+
   $(document).on("click", "#updatePlanet", function() {
+    console.log("id updatePlanet clicked");
     editPlanet($(this).val());
   })
 
   $(document).on("click", "#deletePlanet", function() {
+    console.log("id deletePlanet clicked");
     deletePlanet($(this).val());
   })
+
   // Close modal when x button is hit.
-  $(document).on("click", ".close", function() { $(`.modal`).hide() })
+  $(document).on("click", ".close", function() { $(`.modal`).hide("slow") })
 
 });
