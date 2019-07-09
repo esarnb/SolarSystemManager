@@ -48,8 +48,8 @@ $(function() {
       return;
     }
     var planetProperties = {
-      name: `'${nameText}'`,
-      color: `'${colorText}'`
+      name: nameText,
+      color: colorText
     }
 
     $.ajax(`/api/solar/${rowid}`, {
