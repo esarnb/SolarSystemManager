@@ -1,6 +1,6 @@
 # SolarSystemManager
 
-![Solar System Manager](/public/assets/img/demo.gif)
+![Solar System Manager](public/assets/img/demoSSM.gif)
 
 Welcome to Solar System Manager V1! 
 SSM is a web app with several planets in orbit.
