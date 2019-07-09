@@ -49,7 +49,9 @@ var orm = {
   //Update a specific item's property.
   updateOne: function(table, objColVals, condition, cb) {
     connection.query(`UPDATE ${table} SET ${objToSql(objColVals)} WHERE ${condition}`, function(err, result) {
-      if (err) throw err; cb(result);
+      if (err) {
+        throw err;
+      }; cb(result);
     });
   },
 
