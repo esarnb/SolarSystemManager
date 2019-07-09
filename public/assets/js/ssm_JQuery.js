@@ -1,16 +1,12 @@
 //When the document is ready...
 $(function() {
   /*   Global Variables   */
-  var planets = $(".planet"),
-
-  planetModal = $("#PlanetMenu")
   deletePlanetBtn = $("#deletePlanet"),
   insertPlanetBtn = $("#insertPlanet"),
   updatePlanetBtn =  $("#updatePlanet"),
   confirmPrompt = $("#confirmPrompt");
 
-    /*On the click of a planet's class, open the planet's edit menu */
-  // planets.on("click", function() { planetModal.show() });
+  /*On the click of a planet's class, open the planet's edit menu */
 
   /**
    * Function deletes the specific planet that is
@@ -63,6 +59,12 @@ $(function() {
   }
 
   
+  /**
+   * Function creates a new planet that is
+   * associated with the name and color the user inputs.
+   * 
+   * Uses type POST and sends the data to be updated with.
+   */
   function insertPlanet() {
 
     var nameText = $("#planetNameFieldNew").val().trim();
@@ -85,23 +87,23 @@ $(function() {
       return;
     }
     var planetProperties = {
-      name: `'${nameText}'`,
-      color: `'${colorText}'`
+      name: nameText,
+      color: colorText
     }
 
-    $.ajax(`/api/solar/${rowid}`, {
+    $.ajax(`/api/solar/new`, {
       type: "POST",
       data: planetProperties
     }).then(() => { location.reload() })
   }
 
   /**
-   * Function returns a random hex color.
+   * Function returns a new random hex color.
    * 
-   * Blog by Paul Irish (https://www.paulirish.com/2009/random-hex-color-code-snippets/)
-   * Paul then credits: Ben Alman, Nlogax, and Temp01. 
-   */
-  // function getRandomColor() { return `#${Math.floor(Math.random()*16777215).toString(16)}` }
+   * Only used when color is not provided.
+   * 
+   * Function created by Sajjan Sarkar
+   **/
   function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
@@ -121,40 +123,53 @@ $(function() {
     var wrapper = $("#circle-container");
     wrapper.empty();
     var currAngle = 0;
-
+    
+    //Create divs for each planet with equal angles, rotations, and custom data.
     for (var i = 0; i < data.length; i++) {
-      wrapper.append(`<div class='circle tooltip' style='transform: rotate(${currAngle}deg) translate(12em) rotate(-${currAngle}deg);background-color:${(data[i].color == "#random" ? getRandomColor() : data[i].color)}'><div class='tooltiptext'>Planet ${data[i].id}</div></div>`);
+      wrapper.append(`<div class='circle tooltip' value='${data[i].id}' style='transform: rotate(${currAngle}deg) translate(12em) rotate(-${currAngle}deg);background-color:${(data[i].color == "#random" ? getRandomColor() : data[i].color)}'><div class='tooltiptext'>${data[i].name}</div></div>`);
       currAngle = currAngle + degreeAngle;
     }
   })
 
-
-  $(document).on("click", ".circle", function(event) {
-    console.log(event);
-    console.log("Clicked");
+  /**
+   * On a planet's click event, 
+   * open the custom menu for the specific planet.
+   */
+  $(document).on("click", ".circle", function() {
+    $(`#Planet_${$(this).attr("value")}_Modal`).show("slow");
   })
 
-  $(document).on("click", ".planetBtns", function() {
-    console.log("class planetBtns clicked");
-    
-    $(`#Planet_${$(this).val()}_Modal`).show("slow");
-  })
-
+  /**
+   * On the insert planet button click, 
+   * open the new planet menu.
+   */
   $(document).on("click", "#insertPlanet", function() {
     console.log("id insertPlanet clicked");
     $("#insertPlanetModal").show("slow");
   })
 
+  /**
+   * Once the submit button is clicked,
+   * send the new planet data to the server.
+   */
   $(document).on("click", "#submitNewPlanet", function() {
-    insertPlanet();
     console.log("id submitNewPlanet clicked");
+    insertPlanet();
   })
 
+  /**
+   * Send the specific planet's data to the server,
+   * when the update button for that planet is clicked.
+   */
   $(document).on("click", "#updatePlanet", function() {
     console.log("id updatePlanet clicked");
     editPlanet($(this).val());
   })
 
+  /**
+   * Delete the specific planet's data form the server,
+   * when the delete button for that planet is clicked.
+   */
   $(document).on("click", "#deletePlanet", function() {
     console.log("id deletePlanet clicked");
     deletePlanet($(this).val());

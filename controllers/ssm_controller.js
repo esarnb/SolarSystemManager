@@ -4,6 +4,7 @@ var solar = require("../models/ssm_model");
 //Main page
 router.get("/", function(req, res) {
   solar.all(function(data) {
+    data.created ? data.created = moment(data.created).format("YYYY") : data.created = "N/A";
     res.render("index", { solars: data });
   });
 });
@@ -17,7 +18,7 @@ router.get("/api/solar", function(req, res) {
 
 //New planet
 router.post("/api/solar/new", function(req, res) {
-  solar.create(["name", "ate"], [req.body.name, req.body.ate], function(result) {
+  solar.create(["name", "color"], [req.body.name, req.body.color.trim()], function(result) {
     res.json({ id: result.insertId });
   });
 });

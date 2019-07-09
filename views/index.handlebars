@@ -1,43 +1,51 @@
-<br><br> 
+<br><br>
+{{!-- Creating a new planet --}}
 <button id="insertPlanet">Insert New Planet</button>
 
-
+{{!-- Modal with name/color text boxes --}}
 <div id="insertPlanetModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <span class="floatLeft"><div id="insertPlanetPrompt"> Please fill in the planet's details. </div></span>
-
-      <div>
-        <br>
-        <input type="text" id="planetNameFieldNew" placeholder="New Name">
-        <input type="text" id="planetColorFieldNew" placeholder="New Hex Color">
-        <button id="submitNewPlanet">Submit</button>
-      </div>
-
+    <span class="floatLeft">
+      <div id="insertPlanetPrompt"> Please fill in the planet's details. </div>
+    </span>
+    <br><br>
+    <div>
+      <input type="text" id="planetNameFieldNew" placeholder="New Name">
+      <input type="text" id="planetColorFieldNew" placeholder="New Hex Color">
+      <button id="submitNewPlanet">Submit</button>
+    </div>
   </div>
 </div>
 
+
+{{!-- Listings of all planets --}}
 <ul>
   {{#each solars}}
-    <li>Planet #{{this.id}}: {{this.name}}</li>
-    Created on {{this.created}}
-    <br><br> 
-      
-    <button class="planetBtns" value={{this.id}}>Open Modal</button>
+  <li>Planet #{{this.id}}: {{this.name}}</li>
+  Created on: {{this.created}}
+  <br><br>
 
-    <div id="Planet_{{this.id}}_Modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <span class="floatLeft"><div id="confirmPrompt{{this.id}}">Would you like to edit or delete planet {{this.name}}? </div><button id="deletePlanet" value="{{this.id}}">Delete</button></span>
 
-          <div>
-            <br>
-            <input type="text" id="planetNameField{{this.id}}" placeholder="New Name">
-            <input type="text" id="planetColorField{{this.id}}" placeholder="New Hex Color">
-            <button id="updatePlanet" value="{{this.id}}">Edit</button>
-          </div>
+  {{!-- Custom Modals per planet --}}
+  {{!-- Future Goal: Make one modal with changing text --}}
+  <div id="Planet_{{this.id}}_Modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <span class="floatLeft">
+        <div id="confirmPrompt{{this.id}}">Would you like to edit or delete planet {{this.name}}? </div><button
+          id="deletePlanet" value="{{this.id}}">Delete</button>
+      </span>
 
+      <div>
+        <br>
+        <input type="text" id="planetNameField{{this.id}}" placeholder="New Name">
+        <input type="text" id="planetColorField{{this.id}}" placeholder="New Hex Color">
+        <button id="updatePlanet" value="{{this.id}}">Edit</button>
       </div>
     </div>
+  </div>
+
+
   {{/each}}
 </ul>

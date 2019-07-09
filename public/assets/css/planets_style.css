@@ -15,6 +15,7 @@
   width: 18.5em;
   height: 18.5em;
   padding: 2.8em;
+  color: #6e6d6d;
   border-radius: 50%;
 }
 
@@ -30,12 +31,29 @@
   margin: -2em;
 }
 
+/* Text Colors on page and modals */
+ul, li {
+  color: rgba(100, 216, 216, 0.842);
+}
+
+p {
+  font-weight: bolder;
+}
+
+/* Background formatting */
+body {
+  background-image: url("../img/bg.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 50%; /* Centering the modal when oepned */
+  z-index: 1; /* Pop out */
+  left: 50%; /* Centering the modal when opened */
   top: 50% !important;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
@@ -47,7 +65,7 @@
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
+  background-color: transparent;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
@@ -84,37 +102,28 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  border-bottom: 1px dotted black;
+  height: fit-content;
 }
 
 /* Tooltip text */
 .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px !important;
-  background-color: black;
   color: #fff;
+  visibility: hidden;
+  background-color: black;
   text-align: center;
-  padding: 5px 0;
   border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
-  position: absolute !important;
-
   z-index: 10;
   top: -50% !important;
   left: 50% !important;
-  margin-left: -60px !important; /* Use half of the width (120/2 = 60), to center the tooltip */
-
+  width: 120px !important;
+  padding: 15px 0px 0px;
+  margin: 0px 0px 0px -60px;
+  margin-left: -60px !important; 
+  position: absolute !important;
 }
-
-
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-
-
-/* html, html:hover, body {
-  pointer-events: none;
-} */
